@@ -1,14 +1,10 @@
-import { useState } from "react";
-import Botao from "../Botao";
+import { useState } from 'react';
+import Botao from 'components/Botao';
+import { UsuarioService } from 'services/Usuario/usuario.service';
+import styleTema from 'styles/Tema.module.scss';
+import style from 'styles/Formulario.module.scss';
 
-interface Props {
-  setListaUsuarios: React.Dispatch<React.SetStateAction<{
-    nome: string;
-    email: string;
-}[]>>
-}
-
-export default function Formulario({ setListaUsuarios }: Props) {
+export default function Usuario() {
   const[usuario, setUsuario] = useState({
     nome: '',
     email: '',
@@ -18,14 +14,14 @@ export default function Formulario({ setListaUsuarios }: Props) {
   function incluiUsuario(evento: React.FormEvent) {
     evento.preventDefault();
 
-    setListaUsuarios(listaUsuariosAntiga =>
-      [
-        ...listaUsuariosAntiga,
-        {
-          nome: usuario.nome,
-          email: usuario.email
-        }
-      ]
+    const usuarioService: UsuarioService = new UsuarioService();
+
+    usuarioService.criaUsuario(
+      {
+        nome: usuario.nome,
+        email: usuario.email,
+        senha: usuario.senha
+      }
     );
 
     setUsuario({
@@ -36,8 +32,9 @@ export default function Formulario({ setListaUsuarios }: Props) {
   }
 
   return (
-    <form onSubmit={incluiUsuario}>
-      <div>
+    <form className={styleTema.container} onSubmit={incluiUsuario}>
+      <h2 className={styleTema.titulo}>Inclusão de Usuário</h2>
+      <div className={style.inputContainer}>
         <label htmlFor="nome">
           Nome
         </label>
@@ -51,7 +48,7 @@ export default function Formulario({ setListaUsuarios }: Props) {
           required
         />
       </div>
-      <div>
+      <div className={style.inputContainer}>
         <label htmlFor="email">
           E-mail
         </label>
@@ -65,7 +62,7 @@ export default function Formulario({ setListaUsuarios }: Props) {
           required
         />
       </div>
-      <div>
+      <div className={style.inputContainer}>
         <label htmlFor="senha">
           Senha
         </label>

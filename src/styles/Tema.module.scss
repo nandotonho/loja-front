@@ -1,0 +1,46 @@
+@import './variaveis';
+@import './breakpoints';
+
+.container {
+  padding: 50px $padding-horizontal;
+  justify-items: center;
+  @media (max-width: $desktop_xsm) {
+    padding: 50px $padding-horizontal-mobile;
+  }
+  @media (min-width: $desktop_xsm) and (max-width: $desktop_sm) {
+    padding: 50px $padding-horizontal-sm;
+  }
+  @media (min-width: $desktop_sm) and (max-width: $desktop_md) {
+    padding: 50px $padding-horizontal-md;
+  }
+}
+
+.titulo {
+  justify-self: left;
+  color: $dark-red;
+  font-size: 3rem;
+  margin-bottom: 30px;
+}
+
+.lista {
+  justify-self: left;
+}
+
+.item {
+  list-style-type: none;
+  background-color: $grey;
+  border-style: solid;
+  border-width: 6px;
+  border-color: $dark-red;
+  border-radius: 10px;
+  padding: 6px;
+  padding-right: 150px;
+  margin-bottom: 8px;
+  position: relative;
+  
+  h2 {
+    margin-bottom: 8px;
+    word-break: break-all;
+    color: $dark-green;
+  }
+}

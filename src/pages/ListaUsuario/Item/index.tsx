@@ -1,3 +1,5 @@
+import styleTema from 'styles/Tema.module.scss';
+
 interface Props {
   nome: string,
   email: string
@@ -5,13 +7,13 @@ interface Props {
 
 export default function Item({ nome, email }: Props) {
   return (
-    <li>
-      <h3>
+    <li className={styleTema.item}>
+      <h2>
         Nome: {nome}
-      </h3>
-      <h3>
+      </h2>
+      <h2>
         Email: {email}
-      </h3>
+      </h2>
     </li>
   )
 }
