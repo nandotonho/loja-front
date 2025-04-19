@@ -1,29 +1,39 @@
-import { IUsuario } from 'types/usuario';
+import http from '../../http';
+import { IListaUsuario, IUsuario } from 'types/usuario';
 
 export class UsuarioService {
-  private usuarioRepository: IUsuario[] = [];
+  public async getListaUsuario(): Promise<IListaUsuario[]> {
+    let listaUsuario: IListaUsuario[] = [];
 
-  constructor() {
-    const usuarioRepositoryStr: string = localStorage.getItem('usuarioRepository') || '';
-
-    this.usuarioRepository = usuarioRepositoryStr !== ''
-      ? JSON.parse(usuarioRepositoryStr, (key, value) => {
-          return value;
-        }) || []
-      : [];
-  }
-
-  public getListaUsuario(): { nome: string, email: string }[] {
-    return this.usuarioRepository.map(usuario => (
-      {...usuario,
-        nome: usuario.nome,
-        email: usuario.email
+    await http.get('http://localhost:3001/usuarios')
+      .then(resposta => {
+        listaUsuario = resposta.data;
+      })
+      .catch(erro => {
+        console.log(erro);
       }
-    ));
+    );
+
+    return listaUsuario;
   }
 
-  public criaUsuario(usuario: IUsuario) {
-    this.usuarioRepository.push(usuario);
-    localStorage.setItem('usuarioRepository', JSON.stringify(this.usuarioRepository));
+  public async criaUsuario(usuario: IUsuario): Promise<boolean> {
+    let usuarioCriado: boolean = false;
+
+    await http.post('http://localhost:3001/usuarios', usuario)
+      .then(resposta => {
+        alert(resposta.data.mensagem);
+        usuarioCriado = true;
+      })
+      .catch(erro => {
+        console.log(erro);
+        alert(Array.isArray(erro.response.data.message)
+          ? erro.response.data.message[0]
+          : erro.response.data.message)
+        ;
+        usuarioCriado = false;
+    });
+
+    return usuarioCriado;
   }
 }

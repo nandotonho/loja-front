@@ -11,12 +11,12 @@ export default function Usuario() {
     senha: ''
   });
 
-  function incluiUsuario(evento: React.FormEvent) {
+  async function incluiUsuario(evento: React.FormEvent) {
     evento.preventDefault();
 
     const usuarioService: UsuarioService = new UsuarioService();
 
-    usuarioService.criaUsuario(
+    const usuarioCriado: boolean = await usuarioService.criaUsuario(
       {
         nome: usuario.nome,
         email: usuario.email,
@@ -24,11 +24,13 @@ export default function Usuario() {
       }
     );
 
-    setUsuario({
-      nome: '',
-      email: '',
-      senha: ''
-    });
+    if (usuarioCriado) {
+      setUsuario({
+        nome: '',
+        email: '',
+        senha: ''
+      });
+    };
   }
 
   return (

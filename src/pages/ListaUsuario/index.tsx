@@ -1,14 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UsuarioService } from 'services/Usuario/usuario.service';
 import Item from './Item';
 import styleTema from 'styles/Tema.module.scss';
+import { IListaUsuario } from 'types/usuario';
 
 export default function ListaUsuario() {
-  const usuarioService: UsuarioService = new UsuarioService();
-  const [listaUsuarios] = useState<{ nome: string, email: string }[]>
-  (
-    usuarioService.getListaUsuario()
-  );
+  const [listaUsuarios, setListaUsuarios] = useState<IListaUsuario[]>([]);
+
+  useEffect(() => {
+    async function getData() {
+      const usuarioService: UsuarioService = new UsuarioService();
+      setListaUsuarios(await usuarioService.getListaUsuario());
+    }
+    getData();
+  }, []);
+
   return (
     <aside className={styleTema.container}>
       <h2 className={styleTema.titulo}>Usuários</h2>

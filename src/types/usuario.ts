@@ -3,3 +3,8 @@ export interface IUsuario {
   email: string,
   senha: string
 }
+
+export interface IListaUsuario {
+  id: string,
+  nome: string
+}

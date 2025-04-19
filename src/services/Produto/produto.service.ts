@@ -1,24 +1,38 @@
+import http from '../../http';
 import { IProduto } from 'types/produto';
 
 export class ProdutoService {
-  private produtoRepository: IProduto[] = [];
+  public async getListaProduto(): Promise<IProduto[]> {
+    let listaProduto: IProduto[] = [];
 
-  constructor() {
-    const produtoRepositoryStr: string = localStorage.getItem('produtoRepository') || '';
-
-    this.produtoRepository = produtoRepositoryStr !== ''
-      ? JSON.parse(produtoRepositoryStr, (key, value) => {
-          return value;
-        }) || []
-      : [];
+    await http.get('produtos')
+      .then(resposta => {
+        listaProduto = resposta.data
+      })
+      .catch(erro => {
+        console.log(erro);
+      });
+    
+    return listaProduto;
   }
 
-  public getListaProduto(): IProduto[] {
-    return this.produtoRepository;
-  }
+  public async criaProduto(produto: IProduto): Promise<boolean> {
+    let produtoCriado: boolean = false;
 
-  public criaProduto(produto: IProduto) {
-    this.produtoRepository.push(produto);
-    localStorage.setItem('produtoRepository', JSON.stringify(this.produtoRepository));
+    await http.post('produtos', produto)
+      .then(resposta => {
+        alert(resposta.data.mensagem);
+        produtoCriado = true;
+      })
+      .catch(erro => {
+        console.log(erro);
+        alert(Array.isArray(erro.response.data.message)
+          ? erro.response.data.message[0]
+          : erro.response.data.message
+        );
+        produtoCriado = false;
+      });
+
+    return produtoCriado;
   }
 }

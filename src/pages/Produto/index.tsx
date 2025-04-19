@@ -15,12 +15,12 @@ export default function Produto() {
     categoria: ''
   });
 
-  function incluiProduto(evento: React.FormEvent) {
+  async function incluiProduto(evento: React.FormEvent) {
     evento.preventDefault();
 
     const produtoService: ProdutoService = new ProdutoService();
 
-    produtoService.criaProduto(
+    const produtoCriado: boolean = await produtoService.criaProduto(
       {
         ...produto,
         valor: Number(produto.valor),
@@ -28,15 +28,18 @@ export default function Produto() {
       }
     );
 
-    setProduto({
-        nome: '',
-        valor: '',
-        quantidadeDisponivel: '',
-        descricao: '',
-        caracteristicas: [],
-        imagens: [],
-        categoria: ''
-      });
+    if (produtoCriado) {
+      setProduto({
+          nome: '',
+          valor: '',
+          quantidadeDisponivel: '',
+          descricao: '',
+          caracteristicas: [],
+          imagens: [],
+          categoria: ''
+        });
+    }
+
   }
 
   return (

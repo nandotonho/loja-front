@@ -1,15 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ProdutoService } from 'services/Produto/produto.service';
 import Item from './Item';
 import styleTema from 'styles/Tema.module.scss';
 import { IProduto } from 'types/produto';
 
 export default function ListaProduto() {
-  const produtoService: ProdutoService = new ProdutoService();
-  const [listaProdutos] = useState<IProduto[]>
-  (
-    produtoService.getListaProduto()
-  );
+  const [listaProdutos, setListaProdutos] = useState<IProduto[]>([]);
+
+  useEffect(() => {
+    async function getData() {
+      const produtoService: ProdutoService = new ProdutoService();
+      setListaProdutos(await produtoService.getListaProduto());
+    }
+    getData();
+  }, []);
 
   return (
     <aside className={styleTema.container}>
