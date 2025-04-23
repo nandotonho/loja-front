@@ -1,18 +1,14 @@
 import styleTema from 'styles/Tema.module.scss';
+import { IListaUsuario } from 'types/usuario';
 
-interface Props {
-  id: string,
-  nome: string
-}
-
-export default function Item({ id, nome }: Props) {
+export default function Item(usuario: IListaUsuario) {
   return (
     <li className={styleTema.item}>
       <h2>
-        Id: {id}
+        Id: {usuario.id}
       </h2>
       <h2>
-        Nome: {nome}
+        Nome: {usuario.nome}
       </h2>
     </li>
   )

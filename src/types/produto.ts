@@ -1,4 +1,5 @@
 export interface IProduto {
+  id: string;
   nome: string;
   valor: number;
   quantidadeDisponivel: number;

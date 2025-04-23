@@ -1,24 +1,12 @@
 import styleTema from 'styles/Tema.module.scss';
+import { IProduto } from 'types/produto';
 
-interface Props {
-  nome: string;
-  valor: number;
-  quantidadeDisponivel: number;
-  descricao: string;
-  caracteristicas: {
-    nome: string;
-    descricao: string;
-  }[];
-  imagens: {
-    url: string;
-    descricao: string;
-  }[];
-  categoria: string;
-}
-
-export default function Item(produto: Props) {
+export default function Item(produto: IProduto) {
   return (
     <li className={styleTema.item}>
+      <h2>
+        Id: {produto.id}
+      </h2>
       <h2>
         Nome: {produto.nome}
       </h2>

@@ -6,6 +6,7 @@ import style from 'styles/Formulario.module.scss';
 
 export default function Produto() {
   const[produto, setProduto] = useState({
+    id: '',
     nome: '',
     valor: '',
     quantidadeDisponivel: '',
@@ -30,6 +31,7 @@ export default function Produto() {
 
     if (produtoCriado) {
       setProduto({
+          id: '',
           nome: '',
           valor: '',
           quantidadeDisponivel: '',

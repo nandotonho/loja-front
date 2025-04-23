@@ -17,9 +17,18 @@ export class ProdutoService {
   }
 
   public async criaProduto(produto: IProduto): Promise<boolean> {
+    const produtoACriar = {
+      nome: produto.nome,
+      valor: produto.valor,
+      quantidadeDisponivel: produto.quantidadeDisponivel,
+      descricao: produto.descricao,
+      caracteristicas: produto.caracteristicas,
+      imagens: produto.imagens,
+      categoria: produto.categoria
+    };
     let produtoCriado: boolean = false;
 
-    await http.post('produtos', produto)
+    await http.post('produtos', produtoACriar)
       .then(resposta => {
         alert(resposta.data.mensagem);
         produtoCriado = true;
